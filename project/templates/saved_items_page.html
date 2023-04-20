@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Saved Items</h2>
+  
+  <h3>Projects</h3>
+  {% for project in saved_projects %}
+    <h4>{{ project.title }}</h4>
+    <p>{{ project.description }}</p>
+    <p>Author: {{ project.author.username }} | Deadline: {{ project.deadline }}</p>
+    <a href="{% url 'contribute' project.id %}">Contribute</a>
+    <a href="{% url 'invest' project.id %}">Invest</a>
+    <a href="{% url 'unsave_project' project.id %}">Remove</a>
+  {% empty %}
+    <p>No saved projects</p>
+  {% endfor %}
+  
+  <h3>Publications</h3>
+  {% for publication in saved_publications %}
+    <h4>{{ publication.title }}</h4>
+    <p>{{ publication.content }}</p>
+    <p>By {{ publication.author.username }} on {{ publication.created_at }}</p>
+    <a href="{% url 'unsave_publication' publication.id %}">Remove</a>
+  {% empty %}
+    <p>No saved publications</p>
+  {% endfor %}
+{% endblock %}

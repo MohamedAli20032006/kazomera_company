@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Investments</h2>
+  
+  {% for investment in investments %}
+    <h3>{{ investment.project.title }}</h3>
+    <p>{{ investment.amount }} invested on {{ investment.created_at }}</p>
+  {% empty %}
+    <p>No investments yet</p>
+  {% endfor %}
+{% endblock %}

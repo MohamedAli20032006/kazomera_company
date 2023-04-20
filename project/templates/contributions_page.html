@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Contributions</h2>
+  
+  {% for contribution in contributions %}
+    <h3>{{ contribution.project.title }}</h3>
+    <p>{{ contribution.amount }} contributed on {{ contribution.created_at }}</p>
+  {% empty %}
+    <p>No contributions yet</p>
+  {% endfor %}
+{% endblock %}

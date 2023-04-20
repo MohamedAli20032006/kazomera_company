@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>News</h2>
+  
+  {% for publication in publications %}
+    <h3>{{ publication.title }}</h3>
+    <p>{{ publication.content }}</p>
+    <p>By {{ publication.author.username }} on {{ publication.created_at }}</p>
+  {% empty %}
+    <p>No news yet</p>
+  {% endfor %}
+{% endblock %}
