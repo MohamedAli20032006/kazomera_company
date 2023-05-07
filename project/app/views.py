@@ -2,13 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from .models import *
 from .forms import *
 
 from django.contrib.auth.models import User
-from rest_framework import generics
-from .models import Publication, Project
-from .serializers import UserSerializer, PublicationSerializer, ProjectSerializer
+from rest_framework.views import APIView
+
+from rest_framework.response import Response
+
+from rest_framework import generics, permissions, status
+from .models import Publication, Project, SavedItem, News, Notification
+from .serializers import UserSerializer, PublicationSerializer, ProjectSerializer, SavedItemSerializer, NewsSerializer, NotificationSerializer
 
 
 @login_required
@@ -107,3 +110,41 @@ class ProjectList(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
+class SavedItemList(generics.ListCreateAPIView):
+    queryset = SavedItem.objects.all()
+    serializer_class = SavedItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class SavedItemDetail(generics.RetrieveDestroyAPIView):
+    queryset = SavedItem.objects.all()
+    serializer_class = SavedItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class NewsList(generics.ListCreateAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class NewsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class NotificationList(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user, is_read=False)
+
+class NotificationDetail(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, pk):
+        notification = get_object_or_404(Notification, pk=pk, user=request.user)
+        notification.is_read = True
+        notification.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
