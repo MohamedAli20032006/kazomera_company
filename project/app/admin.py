@@ -11,3 +11,4 @@ admin.site.register(Project)
 admin.site.register(Contribution)
 admin.site.register(Investment)
 
+

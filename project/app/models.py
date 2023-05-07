@@ -14,7 +14,6 @@ class User(AbstractUser):
     user_permissions = models.ManyToManyField(Permission, related_name='custom_user_set', blank=True, help_text='Specific permissions for this user.')
 
 
-
 class Publication(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -32,11 +31,13 @@ class Post(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
 class Comment(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
 class Interaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,6 +51,7 @@ class Interaction(models.Model):
     )
     action = models.CharField(max_length=10, choices=ACTION_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
@@ -82,3 +84,6 @@ class Investment(models.Model):
     
     def __str__(self):
         return f"{self.investor.username} invested {self.amount} in {self.project.title}"
+
+
+
