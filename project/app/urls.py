@@ -8,7 +8,13 @@ from .views import (
     projects_page,
     contributions_page,
     investments_page,
-    saved_items_page
+    saved_items_page,
+    SavedItemList,
+    SavedItemDetail,
+    NewsList,
+    NewsDetail,
+    NotificationList,
+    NotificationDetail
 )
 from .views import UserList, PublicationList, ProjectList
 from .views import post_detail, add_comment
@@ -32,6 +38,13 @@ urlpatterns = [
 
     path('post/<int:pk>/', post_detail, name='post_detail'),
     path('post/<int:pk>/comment/', add_comment, name='add_comment'),
+
+    path('saved_items/', SavedItemList.as_view()),
+    path('saved_items/<int:pk>/', SavedItemDetail.as_view()),
+    path('news/', NewsList.as_view()),
+    path('news/<int:pk>/', NewsDetail.as_view()),
+    path('notifications/', NotificationList.as_view()),
+    path('notifications/<int:pk>/', NotificationDetail.as_view)
 ]
 
 
