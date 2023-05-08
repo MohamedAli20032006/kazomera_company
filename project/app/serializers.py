@@ -6,7 +6,7 @@ from .models import Publication, Project, SavedItem, News, Notification
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        fields = ['id','username','email','first_name','last_name', 'password1' ,'password2']
 
 
 class PublicationSerializer(serializers.ModelSerializer):
