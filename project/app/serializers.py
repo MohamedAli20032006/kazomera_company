@@ -3,7 +3,6 @@ from rest_framework import serializers
 from .models import Publication, Project, SavedItem, News, Notification
 
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
