@@ -1,30 +1,15 @@
 from django.contrib.auth.decorators import login_required
 
 from django.urls import path
-from django.contrib.auth import views as auth_views
-from .views import (
-    user_page,
-    news_page,
-    projects_page,
-    contributions_page,
-    investments_page,
-    saved_items_page,
-    SavedItemList,
-    SavedItemDetail,
-    NewsList,
-    NewsDetail,
-    NotificationList,
-    NotificationDetail
-)
-from .views import UserList, PublicationList, ProjectList
-from .views import post_detail, add_comment
+from django.contrib.auth import views as auth_views, views
+from .views import *
+   
 
 
 
 
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='news_page'), name='logout'),
+    
     path('user/', user_page, name='user_page'),
     path('news/', news_page, name='news_page'),
     path('projects/', projects_page, name='projects_page'),
@@ -48,3 +33,4 @@ urlpatterns = [
 ]
 
 
+    

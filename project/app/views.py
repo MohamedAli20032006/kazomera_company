@@ -1,18 +1,26 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-
 from .forms import *
-
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-
 from rest_framework.response import Response
-
 from rest_framework import generics, permissions, status
 from .models import Publication, Project, SavedItem, News, Notification
-from .serializers import UserSerializer, PublicationSerializer, ProjectSerializer, SavedItemSerializer, NewsSerializer, NotificationSerializer
+from .serializers import *
 
+from django.views.generic import View
+from django.contrib import messages
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
+from .utils import TokenGenerator,generate_token
+from django.utils.encoding import force_bytes,force_str,DjangoUnicodeDecodeError
+from django.core.mail import EmailMessage
+from django.conf import settings
+
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+# Create your views here
 
 @login_required
 def user_page(request):

@@ -40,10 +40,11 @@ INSTALLED_APPS = [
 
     'app',
     'rest_framework',
+    'authapp',
     
 ]
 
-REST_FRAMEWORK = { }
+REST_FRAMEWORK = {}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
