@@ -24,5 +24,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('auth/', include('authapp.urls')),
     path('', include('app.urls')),
-    path('schema', schema_view)
+    path('schema/', schema_view)
 ]
